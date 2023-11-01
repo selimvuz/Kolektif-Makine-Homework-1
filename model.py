@@ -41,4 +41,4 @@ test_loss, test_accuracy = model.evaluate(X_test, y_test)
 print(f'Test accuracy: {test_accuracy}')
 
 # After training is complete, save the model
-model.save('sentiment_analysis_model2.h5')
+model.save('sentiment_analysis_model.h5')

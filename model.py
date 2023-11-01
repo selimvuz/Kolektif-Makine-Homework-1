@@ -4,6 +4,7 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 import pandas as pd
+import numpy as np
 
 # Load the data
 df = pd.read_csv('Twitter_Data.csv').dropna(subset=['Metinler', 'Duygular'])
@@ -20,6 +21,8 @@ X = pad_sequences(X, maxlen=100)  # Set a fixed sequence length
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42)
+
+np.savetxt('X_test.csv', X_test, delimiter=',')
 
 # Build the model
 model = Sequential([
@@ -41,4 +44,4 @@ test_loss, test_accuracy = model.evaluate(X_test, y_test)
 print(f'Test accuracy: {test_accuracy}')
 
 # After training is complete, save the model
-model.save('sentiment_analysis_model.h5')
+model.save('model.h5')

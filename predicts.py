@@ -6,4 +6,4 @@ df = pd.DataFrame({'Tahminler': predicts.flatten(),
                   'Gerçek Değerler': y_test})
 
 # Save the predictions to a CSV file
-df.to_csv('tahminler_tablosu.csv', index=False)
+df.to_csv('predictions_table.csv', index=False)

@@ -5,6 +5,7 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.callbacks import EarlyStopping
 from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
+from sklearn.manifold import TSNE
 import pandas as pd
 import numpy as np
 
@@ -41,6 +42,7 @@ model = Sequential([
     Dense(1, activation='sigmoid')
 ])
 
+# Compile the model
 model.compile(optimizer=custom_optimizer, loss='binary_crossentropy',
               metrics=['accuracy'])
 

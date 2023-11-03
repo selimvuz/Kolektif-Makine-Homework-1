@@ -1,6 +1,6 @@
 # Initialize t-SNE with desired parameters
 from sklearn.manifold import TSNE
-from main import model, X_train, y_train
+from model import model, X_train, y_train
 from keras.models import Model
 import matplotlib.pyplot as plt
 

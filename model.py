@@ -42,17 +42,18 @@ model = Sequential([
     Dense(1, activation='sigmoid')
 ])
 
-# Compile the model
-model.compile(optimizer=custom_optimizer, loss='binary_crossentropy',
-              metrics=['accuracy'])
+if __name__ == '__main__':
+    # Compile the model
+    model.compile(optimizer=custom_optimizer, loss='binary_crossentropy',
+                  metrics=['accuracy'])
 
-# Train the model
-model.fit(X_train, y_train, epochs=10, batch_size=32,
-          validation_data=(X_test, y_test), callbacks=[early_stopping])
+    # Train the model
+    model.fit(X_train, y_train, epochs=10, batch_size=32,
+              validation_data=(X_test, y_test), callbacks=[early_stopping])
 
-# Evaluate the model
-test_loss, test_accuracy = model.evaluate(X_test, y_test)
-print(f'Test accuracy: {test_accuracy}')
+    # Evaluate the model
+    test_loss, test_accuracy = model.evaluate(X_test, y_test)
+    print(f'Test accuracy: {test_accuracy}')
 
-# After training is complete, save the model
-model.save('model.h5')
+    # After training is complete, save the model
+    model.save('model.h5')

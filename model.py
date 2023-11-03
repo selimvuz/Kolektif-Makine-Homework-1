@@ -2,6 +2,8 @@ from keras.models import Sequential
 from keras.layers import Dense, Embedding, LSTM
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
+from keras.callbacks import EarlyStopping
+from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 import pandas as pd
 import numpy as np
@@ -22,7 +24,14 @@ X = pad_sequences(X, maxlen=100)  # Set a fixed sequence length
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42)
 
-np.savetxt('X_test.csv', X_test, delimiter=',')
+# np.savetxt('X_test.csv', X_test, delimiter=',')
+
+# Specify the optimizer and its hyperparameters
+custom_optimizer = Adam(learning_rate=0.001, beta_1=0.9,
+                        beta_2=0.999, epsilon=1e-07, amsgrad=False)
+
+early_stopping = EarlyStopping(
+    monitor='val_loss', patience=3, restore_best_weights=True)
 
 # Build the model
 model = Sequential([
@@ -32,12 +41,12 @@ model = Sequential([
     Dense(1, activation='sigmoid')
 ])
 
-model.compile(optimizer='adam', loss='binary_crossentropy',
+model.compile(optimizer=custom_optimizer, loss='binary_crossentropy',
               metrics=['accuracy'])
 
 # Train the model
 model.fit(X_train, y_train, epochs=10, batch_size=32,
-          validation_data=(X_test, y_test))
+          validation_data=(X_test, y_test), callbacks=[early_stopping])
 
 # Evaluate the model
 test_loss, test_accuracy = model.evaluate(X_test, y_test)

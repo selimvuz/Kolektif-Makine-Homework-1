@@ -7,7 +7,6 @@ from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from sklearn.manifold import TSNE
 import pandas as pd
-import numpy as np
 
 # Load the data
 df = pd.read_csv('Twitter_Data.csv').dropna(subset=['Metinler', 'Duygular'])

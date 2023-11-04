@@ -8,18 +8,21 @@ from keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
 from sklearn.manifold import TSNE
 import pandas as pd
+import numpy as np
 
 # Load the data
-df = pd.read_csv('Twitter_Datav2.csv').dropna(subset=['Metinler', 'Duygular'])
+df = pd.read_csv(
+    'TRdata.csv', encoding='utf-16').dropna(subset=['Metinler', 'Duygular'])
 
 X = df['Metinler'].values
 y = df['Duygular'].values
 
 # Tokenize the text data
-tokenizer = Tokenizer(num_words=5000)
+tokenizer = Tokenizer()
 tokenizer.fit_on_texts(X)
 X = tokenizer.texts_to_sequences(X)
-X = pad_sequences(X, maxlen=100)  # Set a fixed sequence length
+# Set a fixed sequence length
+X = pad_sequences(X, maxlen=100, truncating='pre', padding='pre', value=0)
 
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(
@@ -44,7 +47,7 @@ early_stopping = EarlyStopping(
 model = Sequential([
     Embedding(input_dim=len(tokenizer.word_index) +
               1, output_dim=100, input_length=100),
-    LSTM(64, dropout=0.2, recurrent_dropout=0.2),
+    LSTM(16, dropout=0.3, recurrent_dropout=0.3),
     Dense(3, activation='softmax')
 ])
 
@@ -54,7 +57,7 @@ if __name__ == '__main__':
                   metrics=['accuracy'])
 
     # Train the model
-    model.fit(X_train, y_train_one_hot, epochs=10, batch_size=32,
+    model.fit(X_train, y_train_one_hot, epochs=10, batch_size=16,
               validation_data=(X_test, y_test_one_hot), callbacks=[early_stopping])
 
     # Evaluate the model
@@ -62,4 +65,4 @@ if __name__ == '__main__':
     print(f'Test accuracy: {test_accuracy}')
 
     # After training is complete, save the model
-    model.save('model_v3.h5')
+    model.save('model_v8.h5')

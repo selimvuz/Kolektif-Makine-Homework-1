@@ -5,7 +5,7 @@ from model import X_train, y_train
 from keras.models import Model
 import matplotlib.pyplot as plt
 
-model = load_model('model_v8.h5')
+model = load_model('Model/model_v8.h5')
 
 tsne = TSNE(n_components=2, random_state=42)
 

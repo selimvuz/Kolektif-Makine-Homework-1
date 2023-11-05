@@ -1,9 +1,12 @@
 # Initialize t-SNE with desired parameters
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
-from model import model, X_train, y_train
+from keras.models import load_model
+from model import X_train, y_train
 from keras.models import Model
 import matplotlib.pyplot as plt
+
+model = load_model('Model/model_v8.h5')
 
 # Create a new model that outputs the embeddings from the Dense layer
 embedding_model = Model(

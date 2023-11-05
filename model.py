@@ -65,4 +65,4 @@ if __name__ == '__main__':
     print(f'Test accuracy: {test_accuracy}')
 
     # After training is complete, save the model
-    model.save('model_v8.h5')
+    model.save('Model/model_v8.h5')

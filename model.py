@@ -12,7 +12,7 @@ import numpy as np
 
 # Load the data
 df = pd.read_csv(
-    'TRdata.csv', encoding='utf-16').dropna(subset=['Metinler', 'Duygular'])
+    'Datasets/TRdata.csv', encoding='utf-16').dropna(subset=['Metinler', 'Duygular'])
 
 X = df['Metinler'].values
 y = df['Duygular'].values

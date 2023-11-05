@@ -1,8 +1,11 @@
 # Initialize t-SNE with desired parameters
 from sklearn.manifold import TSNE
-from model import model, X_train, y_train
+from keras.models import load_model
+from model import X_train, y_train
 from keras.models import Model
 import matplotlib.pyplot as plt
+
+model = load_model('model_v8.h5')
 
 tsne = TSNE(n_components=2, random_state=42)
 

@@ -21,9 +21,9 @@ plt.axis('off')
 
 # Tahmin değerini değişkene ata
 if prediction < 0.5:
-    prediction_text = 'Predicted: Cat'
+    prediction_text = 'Tahmin: Kedi'
 else:
-    prediction_text = 'Predicted: Dog'
+    prediction_text = 'Tahmin: Köpek'
 
 # Tahmin değerini ekrana yazdır
 plt.text(10, 10, prediction_text, color='white',

@@ -1,6 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Embedding, LSTM
 from keras.preprocessing.text import Tokenizer
+from keras.initializers import Constant
 from keras.preprocessing.sequence import pad_sequences
 from keras.callbacks import EarlyStopping
 from keras.optimizers import Adam
@@ -37,7 +38,7 @@ y_test_one_hot = to_categorical(y_test, num_classes=num_classes)
 # np.savetxt('X_test.csv', X_test, delimiter=',')
 
 # Specify the optimizer and its hyperparameters
-custom_optimizer = Adam(learning_rate=0.0001, beta_1=0.9,
+custom_optimizer = Adam(learning_rate=0.0002, beta_1=0.9,
                         beta_2=0.999, epsilon=1e-07, amsgrad=False)
 
 early_stopping = EarlyStopping(
@@ -45,10 +46,12 @@ early_stopping = EarlyStopping(
 
 # Build the model
 model = Sequential([
-    Embedding(input_dim=len(tokenizer.word_index) +
-              1, output_dim=100, input_length=100),
-    LSTM(16, dropout=0.3, recurrent_dropout=0.3),
-    Dense(3, activation='softmax')
+    Embedding(input_dim=len(tokenizer.word_index) + 1, output_dim=100, input_length=100,
+              embeddings_initializer=Constant(value=0.1)),  # Embedding katmanına sabit başlangıç değeri
+    LSTM(16, dropout=0.1, recurrent_dropout=0.1, kernel_initializer=Constant(
+        value=0.1)),  # LSTM katmanına sabit başlangıç değeri
+    Dense(3, activation='softmax', kernel_initializer=Constant(
+        value=0.1))  # Dense katmanına sabit başlangıç değeri
 ])
 
 if __name__ == '__main__':
@@ -65,4 +68,4 @@ if __name__ == '__main__':
     print(f'Test accuracy: {test_accuracy}')
 
     # After training is complete, save the model
-    model.save('Model/model_v8.h5')
+    model.save('Model/model_v11.h5')

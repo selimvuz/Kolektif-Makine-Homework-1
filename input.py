@@ -3,7 +3,7 @@ from keras.models import load_model
 from model import tokenizer
 import numpy as np
 
-model = load_model('Model/model_v8.h5')
+model = load_model('Model/model_v11.h5')
 
 # Örnek bir girdi tanımla
 example_input = [

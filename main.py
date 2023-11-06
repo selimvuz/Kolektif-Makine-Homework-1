@@ -15,7 +15,7 @@ beta1 = 0.9
 beta2 = 0.999
 epsilon = 1e-7
 
-# Define a function to compute Mean Squared Error
+# MSE hesaplama fonksiyonu
 
 
 def compute_mse(X, y, w, b):
@@ -25,7 +25,6 @@ def compute_mse(X, y, w, b):
 
 
 # Stokastik Gradient Descent (SGD)
-
 print("Stokastik Gradient Descent")
 
 for epoch in range(100):
@@ -88,6 +87,3 @@ for epoch in range(100):
     # Evaluate and print MSE
     mse = compute_mse(X, y, w, b)
     print(f"Epoch {epoch+1}, MSE: {mse}")
-
-# Her bir optimizasyon algoritması için elde edilen w ve b değerlerini kullanarak
-# modelin performansını değerlendirebilirsiniz.

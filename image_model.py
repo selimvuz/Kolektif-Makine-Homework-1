@@ -5,7 +5,7 @@ from keras.optimizers import Adam
 import pandas as pd
 import numpy as np
 
-# Define data generators for training and validation
+# Eğitim ve test oluşturucularını tanımla
 train_datagen = ImageDataGenerator(rescale=1./255)
 train_generator = train_datagen.flow_from_directory(
     'Datasets/dataset/training_set',  # Path to the training set directory
@@ -30,7 +30,7 @@ test_generator = test_datagen.flow_from_directory(
     class_mode='binary'
 )
 
-# Build the model
+# Modeli tanımla
 model = Sequential([
     Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)),
     MaxPooling2D((2, 2)),
@@ -39,13 +39,14 @@ model = Sequential([
     Dense(1, activation='sigmoid')  # Binary classification, so use 'sigmoid'
 ])
 
-# Compile the model
+# Modeli derle
 model.compile(optimizer='adam', loss='binary_crossentropy',
               metrics=['accuracy'])
 
-# Print model summary
+# Modelin özeti
 model.summary()
 
+# Modeli eğit
 model.fit(
     train_generator,
     epochs=5,
@@ -54,9 +55,10 @@ model.fit(
     validation_steps=len(val_generator)
 )
 
+# Test veri kümesi üzerinde modeli değerlendir
 test_loss, test_accuracy = model.evaluate(
     test_generator, steps=len(test_generator))
 print(f'Test accuracy: {test_accuracy}')
 
-# Save the model
+# Modeli kaydet
 model.save('Model/image_model_v1.h5')

@@ -3,7 +3,7 @@ from keras.models import load_model
 from model import tokenizer
 import numpy as np
 
-model = load_model('Model/model_v11.h5')
+model = load_model('Model/model_v22.h5')
 
 # Örnek bir girdi tanımla
 example_input = [
@@ -12,16 +12,16 @@ example_input_two = [
     "Bu ürün tam bir hayal kırıklığıydı. Kalitesiz malzemeler kullanılmış, hemen kırılıyor. Üstelik çok pahalı. Kesinlikle tavsiye etmiyorum, paranıza yazık!"]
 
 # Maksimum girdi uzunluğunu tanımla
-max_length = 100
+max_length = 250
 
 # Girdiyi ön işle (tokenize et ve dizilere çevir)
 tokenized_input = tokenizer.texts_to_sequences(example_input)
 tokenized_input_two = tokenizer.texts_to_sequences(example_input_two)
 
 # Dizileri eşit uzunluğa kadar doldur veya kırp
-padded_sequence = pad_sequences(tokenized_input, maxlen=100, truncating='pre',
+padded_sequence = pad_sequences(tokenized_input, maxlen=max_length, truncating='pre',
                                 padding='pre', value=0)
-padded_sequence_two = pad_sequences(tokenized_input_two, maxlen=100, truncating='pre',
+padded_sequence_two = pad_sequences(tokenized_input_two, maxlen=max_length, truncating='pre',
                                     padding='pre', value=0)
 
 # Modeli kullanarak tahmin yap

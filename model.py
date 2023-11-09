@@ -1,5 +1,5 @@
 from keras.models import Sequential
-from keras.layers import Dense, Embedding, LSTM, Conv1D, GlobalMaxPooling1D
+from keras.layers import Dense, Embedding, Conv1D, GlobalMaxPooling1D
 from keras.preprocessing.text import Tokenizer
 from keras.initializers import Constant
 from keras.preprocessing.sequence import pad_sequences
@@ -7,7 +7,6 @@ from keras.callbacks import EarlyStopping
 from keras.optimizers import Adam, SGD
 from keras.utils import to_categorical
 from sklearn.model_selection import train_test_split
-from sklearn.manifold import TSNE
 import pandas as pd
 import numpy as np
 
@@ -38,7 +37,7 @@ y_test_one_hot = to_categorical(y_test, num_classes=num_classes)
 # np.savetxt('X_test.csv', X_test, delimiter=',')
 
 # Öğrenme oranını tanımla
-learning_rate = 0.01
+learning_rate = 0.00001
 
 # Adam optimizasyonu
 adam_optimizer = Adam(learning_rate=learning_rate, beta_1=0.9,
@@ -56,8 +55,8 @@ early_stopping = EarlyStopping(
 
 # Modeli tanımla
 model = Sequential([
-    Embedding(input_dim=len(tokenizer.word_index) + 1, output_dim=30,
-              input_length=250, mask_zero=True, embeddings_initializer=Constant(value=0.5)),  # Embedding katmanına sabit başlangıç değeri
+    Embedding(input_dim=len(tokenizer.word_index) + 1, output_dim=100,
+              input_length=250, mask_zero=True, embeddings_initializer=Constant(value=0.01)),  # Embedding katmanına sabit başlangıç değeri
     # Add a 1D Convolutional Layer
     Conv1D(filters=64, kernel_size=3, activation='relu'),
     GlobalMaxPooling1D(),  # Pooling layer to reduce dimensions
@@ -66,11 +65,11 @@ model = Sequential([
 
 if __name__ == '__main__':
     # Modeli derle
-    model.compile(optimizer=sdgm_optimizer, loss='categorical_crossentropy',
+    model.compile(optimizer=adam_optimizer, loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
     # Modelin eğit
-    model.fit(X_train, y_train_one_hot, epochs=5, batch_size=32,
+    model.fit(X_train, y_train_one_hot, epochs=50, batch_size=64,
               validation_data=(X_test, y_test_one_hot), callbacks=[early_stopping])
 
     # Modeli hesapla

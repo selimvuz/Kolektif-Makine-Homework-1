@@ -7,9 +7,9 @@ model = load_model('Model/model_v22.h5')
 
 # Örnek bir girdi tanımla
 example_input = [
-    "Bu ürün gerçekten harika! Kaliteli malzemeler kullanılmış ve çok dayanıklı. Ayrıca tasarımı da çok şık. Kullanımı çok kolay ve işlevi mükemmel. Kesinlikle tavsiye ederim!"]
+    "Bu ürün gerçekten harika! Kaliteli malzemeler kullanılmış ve çok dayanıklı. Ayrıca tasarımı da çok şık. Kullanımı çok kolay ve işlevi mükemmel."]
 example_input_two = [
-    "Bu ürün tam bir hayal kırıklığıydı. Kalitesiz malzemeler kullanılmış, hemen kırılıyor. Üstelik çok pahalı. Kesinlikle tavsiye etmiyorum, paranıza yazık!"]
+    "Tam bir hayal kırıklığıydı. Hemen kırılıyor. Üstelik çok pahalı. Kesinlikle tavsiye etmiyorum, paranıza yazık!"]
 
 # Maksimum girdi uzunluğunu tanımla
 max_length = 250

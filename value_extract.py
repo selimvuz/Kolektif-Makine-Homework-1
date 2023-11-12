@@ -56,5 +56,5 @@ for line in lines:
         val_accuracy_list.append(float(match.group(2)))
 
 # Listeleri ekrana yazdır
-print("accuracy List:", accuracy_list)
-print("Validation accuracy List:", val_accuracy_list)
+print("Accuracy List:", accuracy_list)
+print("Validation Accuracy List:", val_accuracy_list)

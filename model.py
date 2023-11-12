@@ -20,15 +20,16 @@ y = df['Duygular'].values
 # Veriyi tokenleştir
 tokenizer = Tokenizer()
 tokenizer.fit_on_texts(X)
+
 X = tokenizer.texts_to_sequences(X)
-# Set a fixed sequence length
-X = pad_sequences(X, maxlen=250, truncating='pre', padding='pre', value=0)
+# Sabit bir girdi uzunluğu belirle
+X = pad_sequences(X, maxlen=200, truncating='pre', padding='pre', value=0)
 
 # Veriyi eğitim ve test kümelerine ayır
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.1, random_state=42)
 
-num_classes = 3  # Number of classes
+num_classes = 3  # Sınıf sayısı
 
 # One-hot encode
 y_train_one_hot = to_categorical(y_train, num_classes=num_classes)
@@ -47,16 +48,18 @@ adam_optimizer = Adam(learning_rate=learning_rate, beta_1=0.9,
 sgd_optimizer = SGD(learning_rate=learning_rate)
 
 # SGD + Momentum optimizasyonu
-sdgm_optimizer = SGD(learning_rate=learning_rate, momentum=0.9)
+sgdm_optimizer = SGD(learning_rate=learning_rate, momentum=0.9)
 
 # Validation loss 3 devirde gelişmezse eğitimi durdur
 early_stopping = EarlyStopping(
     monitor='val_loss', patience=3, restore_best_weights=True)
 
+input_dim = len(tokenizer.word_index) + 1
+
 # Modeli tanımla
 model = Sequential([
-    Embedding(input_dim=len(tokenizer.word_index) + 1, output_dim=100,
-              input_length=250, mask_zero=True, embeddings_initializer=Constant(value=0.01)),
+    Embedding(input_dim=input_dim, output_dim=100,
+              input_length=200, mask_zero=True, embeddings_initializer=Constant(value=0.25)),
     Conv1D(filters=64, kernel_size=3, activation='relu'),
     GlobalMaxPooling1D(),
     Dense(3, activation='softmax')
@@ -64,7 +67,7 @@ model = Sequential([
 
 if __name__ == '__main__':
     # Modeli derle
-    model.compile(optimizer=sgd_optimizer, loss='categorical_crossentropy',
+    model.compile(optimizer=sgdm_optimizer, loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
     # Modelin eğit
@@ -76,4 +79,4 @@ if __name__ == '__main__':
     print(f'Test accuracy: {test_accuracy}')
 
     # Modeli kaydet
-    model.save('Model/model_sgd_v1.h5')
+    model.save('Model/model_sgdm_v5.h5')

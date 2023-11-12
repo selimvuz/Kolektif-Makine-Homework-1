@@ -5,4 +5,5 @@ model = load_model('Model/model_adam.h5')
 
 summary = model.summary()
 
+# Modelin özetini ekrana yazdır
 print(summary)
